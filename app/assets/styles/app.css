@@ -1,3 +1,18 @@
 body {
-    background-color: skyblue;
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+}
+
+.header {
+    background-color: salmon;
+}
+
+.main {
+    background-color: lightblue;
+    flex: 1;
+}
+
+.footer {
+    background-color: lightseagreen;
 }
