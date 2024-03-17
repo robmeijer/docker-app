@@ -11,10 +11,9 @@
         "symfony/dotenv": "7.0.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.0.*",
+        "symfony/monolog-bundle": "^3.0",
         "symfony/runtime": "7.0.*",
         "symfony/yaml": "7.0.*"
-    },
-    "require-dev": {
     },
     "config": {
         "allow-plugins": {
@@ -64,5 +63,11 @@
             "allow-contrib": false,
             "require": "7.0.*"
         }
+    },
+    "require-dev": {
+        "symfony/debug-bundle": "7.0.*",
+        "symfony/maker-bundle": "^1.56",
+        "symfony/stopwatch": "7.0.*",
+        "symfony/web-profiler-bundle": "7.0.*"
     }
 }
