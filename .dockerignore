@@ -12,5 +12,6 @@
 !/app/translations/
 !/app/.env
 !/app/composer.*
+!/app/importmap.php
 !/app/symfony.lock
 !/docker/
