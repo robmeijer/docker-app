@@ -10,10 +10,8 @@ services:
     web:
         image: ${APP_NAME:-symfony}-web:local
         build:
-            args:
-                ASSETS_IMAGE: "${APP_NAME:-symfony}-app-dev:local"
             context: .
-            dockerfile: ./docker/nginx/Dockerfile
+            dockerfile: ./docker/Dockerfile
             target: web_dev
         ports:
             - ${APP_PORT:-8000}:80
