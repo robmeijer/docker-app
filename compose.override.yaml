@@ -1,0 +1,11 @@
+services:
+    app:
+        environment:
+            APP_ENV: dev
+            OPCACHE_VALIDATE_TIMESTAMPS: 1
+        volumes:
+            - ./app:/var/www/html:rw,cached
+    web:
+        image: ${APP_NAME}-web:local
+        volumes:
+            - ./app/public:/var/www/html/public:ro,delegated

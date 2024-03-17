@@ -1,0 +1,21 @@
+services:
+    app:
+        image: ${APP_NAME:-symfony}-app-dev:local
+        build:
+            context: .
+            dockerfile: ./docker/Dockerfile
+            target: app_dev
+        env_file:
+            - ${ENV_FILE:-.env}
+    web:
+        image: ${APP_NAME:-symfony}-web:local
+        build:
+            args:
+                ASSETS_IMAGE: "${APP_NAME:-symfony}-app-dev:local"
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
+            target: web_dev
+        ports:
+            - ${APP_PORT:-8000}:80
+        depends_on:
+            - app
