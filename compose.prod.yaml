@@ -6,6 +6,4 @@ services:
     web:
         image: symfony-web:local
         build:
-            args:
-                ASSETS_IMAGE: "${APP_NAME}-app:local"
             target: web
