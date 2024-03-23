@@ -3,6 +3,9 @@ services:
         environment:
             APP_ENV: dev
             OPCACHE_VALIDATE_TIMESTAMPS: 1
+            XDEBUG_MODE: develop,debug
+        extra_hosts:
+            - host.docker.internal:host-gateway
         volumes:
             - ./app:/var/www/html:rw,cached
     web:
