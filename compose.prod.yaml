@@ -1,9 +1,9 @@
 services:
     app:
-        image: symfony-app:local
+        image: ${APP_NAME:-symfony}-app:local
         build:
             target: app
     web:
-        image: symfony-web:local
+        image: ${APP_NAME:-symfony}-web:local
         build:
             target: web
