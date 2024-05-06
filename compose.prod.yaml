@@ -3,7 +3,3 @@ services:
         image: ${APP_NAME:-symfony}-app:local
         build:
             target: app
-    web:
-        image: ${APP_NAME:-symfony}-web:local
-        build:
-            target: web

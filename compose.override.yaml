@@ -7,8 +7,6 @@ services:
         extra_hosts:
             - host.docker.internal:host-gateway
         volumes:
-            - ./app:/var/www/html:rw,cached
-    web:
-        image: ${APP_NAME}-web:local
-        volumes:
-            - ./app/public:/var/www/html/public:ro,delegated
+            - ./app:/var/www/html
+            - ./docker/frankenphp/Caddyfile:/etc/caddy/Caddyfile
+        tty: true
