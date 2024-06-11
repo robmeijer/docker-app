@@ -7,8 +7,8 @@ $finder = (new PhpCsFixer\Finder())
 
 return (new PhpCsFixer\Config())
     ->setRules([
-        '@Symfony' => true,
+        '@PER-CS' => true,
     ])
-    ->setCacheFile(__DIR__.'/var/php-cs-fixer/.php-cs-fixer.cache')
+    ->setCacheFile(__DIR__ . '/var/php-cs-fixer/.php-cs-fixer.cache')
     ->setFinder($finder)
 ;
