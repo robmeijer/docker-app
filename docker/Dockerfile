@@ -1,34 +1,5 @@
 # syntax=docker/dockerfile:1.7
-FROM dunglas/frankenphp:1-php8.3 AS base
-
-ENV OPCACHE_VALIDATE_TIMESTAMPS=0 COMPOSER_ALLOW_SUPERUSER=1
-
-WORKDIR /var/www/html
-
-RUN useradd -D www-data; \
-    setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp; \
-    chown -R www-data:www-data /data/caddy && chown -R www-data:www-data /config/caddy;
-
-RUN set -eux; \
-	install-php-extensions \
-		@composer \
-		apcu \
-		intl \
-		opcache \
-        pcntl \
-        pdo_mysql \
-		zip \
-	;
-
-RUN ln -s ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini
-
-COPY --link docker/conf.d/app.ini $PHP_INI_DIR/conf.d/
-COPY --link docker/frankenphp/Caddyfile /etc/caddy/Caddyfile
-
-HEALTHCHECK --start-period=60s CMD curl -f http://localhost:2019/metrics || exit 1
-CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
-
-FROM base AS app
+FROM ghcr.io/robmeijer/php:8.3-frankenphp AS app
 
 ENV APP_ENV=prod XDEBUG_MODE=off
 

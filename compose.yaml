@@ -9,12 +9,5 @@ services:
             - 80:80
             - 443:443
             - 443:443/udp
-        volumes:
-            - caddy_data:/data
-            - caddy_config:/config
         env_file:
             - ${ENV_FILE:-.env}
-
-volumes:
-    caddy_data:
-    caddy_config:

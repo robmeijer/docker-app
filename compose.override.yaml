@@ -8,5 +8,4 @@ services:
             - host.docker.internal:host-gateway
         volumes:
             - ./app:/var/www/html
-            - ./docker/frankenphp/Caddyfile:/etc/caddy/Caddyfile
         tty: true
