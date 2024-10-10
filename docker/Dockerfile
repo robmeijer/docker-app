@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.7
+# syntax=docker/dockerfile:1
 FROM ghcr.io/robmeijer/php:8.3-frankenphp AS app
 
 ENV APP_ENV=prod XDEBUG_MODE=off
