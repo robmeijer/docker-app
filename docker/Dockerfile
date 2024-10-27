@@ -3,8 +3,6 @@ FROM ghcr.io/robmeijer/php:8.3-frankenphp AS app
 
 ENV APP_ENV=prod XDEBUG_MODE=off
 
-USER www-data
-
 COPY --link app/composer.* app/symfony.lock ./
 
 RUN set -eux; \
@@ -20,6 +18,8 @@ RUN set -eux; \
     chmod -R 777 var;
 
 COPY --link --chmod=755 docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+
+USER www-data
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
