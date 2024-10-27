@@ -5,13 +5,13 @@ ENV APP_ENV=prod XDEBUG_MODE=off
 
 USER www-data
 
-COPY --link --chown=www-data:www-data app/composer.* app/symfony.lock ./
+COPY --link app/composer.* app/symfony.lock ./
 
 RUN set -eux; \
     composer install --prefer-dist --no-dev --no-scripts --no-progress --ignore-platform-reqs --no-interaction; \
     composer clear-cache;
 
-COPY --link --chown=www-data:www-data app ./
+COPY --link app ./
 
 RUN set -eux; \
     composer dump-autoload --classmap-authoritative --no-dev; \
