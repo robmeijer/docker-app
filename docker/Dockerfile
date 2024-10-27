@@ -19,8 +19,6 @@ RUN set -eux; \
 
 COPY --link --chmod=755 docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 
-USER www-data
-
 ENTRYPOINT ["docker-entrypoint"]
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
 
