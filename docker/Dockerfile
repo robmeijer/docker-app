@@ -1,9 +1,7 @@
-# syntax=docker/dockerfile:1.7
-FROM ghcr.io/robmeijer/php:8.3-fpm AS app
+# syntax=docker/dockerfile:1
+FROM ghcr.io/robmeijer/php:8.3-fpm-alpine AS app
 
 ENV APP_ENV=prod XDEBUG_MODE=off
-
-USER www-data
 
 COPY --link --chown=www-data:www-data app/composer.* app/symfony.lock ./
 
@@ -24,7 +22,7 @@ COPY --link --chmod=755 docker/docker-entrypoint.sh /usr/local/bin/docker-entryp
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
-FROM nginx:1.25-alpine as web_dev
+FROM nginx:1.27-alpine as web_dev
 
 WORKDIR /var/www/html
 
@@ -36,6 +34,15 @@ COPY --from=app /var/www/html/public ./public
 
 FROM app AS app_dev
 
+ARG USER_ID
+ARG GROUP_ID
+
 USER root
 
-RUN install-php-extensions xdebug
+RUN set -eux; \
+    install-php-extensions xdebug; \
+    ln -sf "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"; \
+    apk add --no-cache shadow; \
+    usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data;
+
+USER www-data

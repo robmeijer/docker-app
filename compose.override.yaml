@@ -1,5 +1,9 @@
 services:
     app:
+        build:
+            args:
+                USER_ID: ${USER_ID:-1000}
+                GROUP_ID: ${GROUP_ID:-1000}
         environment:
             APP_ENV: dev
             OPCACHE_VALIDATE_TIMESTAMPS: 1
@@ -9,6 +13,5 @@ services:
         volumes:
             - ./app:/var/www/html:rw,cached
     web:
-        image: ${APP_NAME}-web:local
         volumes:
             - ./app/public:/var/www/html/public:ro,delegated
