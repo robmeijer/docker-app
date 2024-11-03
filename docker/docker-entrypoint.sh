@@ -8,7 +8,8 @@ fi
 
 if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
   if [ "$APP_ENV" = 'dev' ]; then
-    composer install --prefer-dist --no-progress --no-interaction
+    composer install --prefer-dist --no-progress --no-interaction --no-cache
+    chmod -R 777 var
   else
     bin/console asset-map:compile
   fi
