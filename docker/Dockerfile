@@ -9,8 +9,7 @@ ENV APP_ENV=prod XDEBUG_MODE=off
 COPY --link --chown=${USER_ID}:${GROUP_ID} app/composer.* app/symfony.lock ./
 
 RUN set -eux; \
-    composer install --prefer-dist --no-dev --no-scripts --no-progress --ignore-platform-reqs --no-interaction; \
-    composer clear-cache;
+    composer install --prefer-dist --no-dev --no-scripts --no-progress --ignore-platform-reqs --no-cache -n;
 
 COPY --link --chown=${USER_ID}:${GROUP_ID} app ./
 
