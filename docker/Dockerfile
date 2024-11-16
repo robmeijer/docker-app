@@ -1,16 +1,13 @@
 # syntax=docker/dockerfile:1
 FROM ghcr.io/robmeijer/php:8.3-fpm-alpine AS app
 
-ARG USER_ID=82
-ARG GROUP_ID=82
-
 ENV APP_ENV=prod XDEBUG_MODE=off
 
-COPY --link --chown=${USER_ID}:${GROUP_ID} app/composer.* app/symfony.lock ./
+COPY --link --chown=www-data:www-data app/composer.* app/symfony.lock ./
 
 RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --ignore-platform-reqs --no-cache -n
 
-COPY --link --chown=${USER_ID}:${GROUP_ID} app ./
+COPY --link --chown=www-data:www-data app ./
 
 RUN set -eux; \
     composer dump-autoload --classmap-authoritative --no-dev; \
@@ -34,6 +31,9 @@ FROM web_dev as web
 COPY --link --from=app /var/www/html/public ./public
 
 FROM app AS app_dev
+
+ARG USER_ID=82
+ARG GROUP_ID=82
 
 USER root
 
