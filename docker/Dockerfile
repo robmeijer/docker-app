@@ -31,6 +31,7 @@ RUN set -eux; \
     install-php-extensions xdebug; \
     ln -sf "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"; \
     usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data; \
-    chown -R www-data:www-data /data/caddy && chown -R www-data:www-data /config/caddy;
+    chown -R www-data:www-data /data/caddy && chown -R www-data:www-data /config/caddy; \
+    chown -R www-data:www-data /var/www;
 
 USER www-data
