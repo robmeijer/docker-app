@@ -5,9 +5,7 @@ ENV APP_ENV=prod XDEBUG_MODE=off
 
 COPY --link --chown=www-data:www-data app/composer.* app/symfony.lock ./
 
-RUN set -eux; \
-    composer install --prefer-dist --no-dev --no-scripts --no-progress --ignore-platform-reqs --no-interaction; \
-    composer clear-cache;
+RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --ignore-platform-reqs --no-cache -n
 
 COPY --link --chown=www-data:www-data app ./
 
@@ -26,11 +24,11 @@ FROM nginx:1.27-alpine as web_dev
 
 WORKDIR /var/www/html
 
-COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/
+COPY --link docker/nginx/conf.d/default.conf /etc/nginx/conf.d/
 
 FROM web_dev as web
 
-COPY --from=app /var/www/html/public ./public
+COPY --link --from=app /var/www/html/public ./public
 
 FROM app AS app_dev
 
