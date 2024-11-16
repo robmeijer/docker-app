@@ -1,5 +1,8 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/robmeijer/php:8.3-fpm-alpine AS app
+ARG PHP_VERSION=8.3
+ARG NGINX_VERSION=1.27
+
+FROM ghcr.io/robmeijer/php:${PHP_VERSION}-fpm-alpine AS app
 
 ENV APP_ENV=prod XDEBUG_MODE=off
 
@@ -20,16 +23,6 @@ COPY --link --chmod=755 docker/docker-entrypoint.sh /usr/local/bin/docker-entryp
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
-FROM nginx:1.27-alpine as web_dev
-
-WORKDIR /var/www/html
-
-COPY --link docker/nginx/conf.d/default.conf /etc/nginx/conf.d/
-
-FROM web_dev as web
-
-COPY --link --from=app /var/www/html/public ./public
-
 FROM app AS app_dev
 
 ARG USER_ID=82
@@ -44,3 +37,13 @@ RUN set -eux; \
     usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data;
 
 USER www-data
+
+FROM nginx:${NGINX_VERSION}-alpine as web_dev
+
+WORKDIR /var/www/html
+
+COPY --link docker/nginx/conf.d/default.conf /etc/nginx/conf.d/
+
+FROM web_dev as web
+
+COPY --link --from=app /var/www/html/public ./public
