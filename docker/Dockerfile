@@ -1,13 +1,16 @@
 # syntax=docker/dockerfile:1
 FROM ghcr.io/robmeijer/php:8.3-frankenphp AS app
 
+ARG USER_ID=33
+ARG GROUP_ID=33
+
 ENV APP_ENV=prod XDEBUG_MODE=off
 
-COPY --link --chown=www-data:www-data app/composer.* app/symfony.lock ./
+COPY --link --chown=${USER_ID}:${GROUP_ID} app/composer.* app/symfony.lock ./
 
 RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --ignore-platform-reqs --no-cache -n
 
-COPY --link --chown=www-data:www-data app ./
+COPY --link --chown=${USER_ID}:${GROUP_ID} app ./
 
 RUN set -eux; \
     composer dump-autoload --classmap-authoritative --no-dev; \
@@ -21,9 +24,6 @@ ENTRYPOINT ["docker-entrypoint"]
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
 
 FROM app AS app_dev
-
-ARG USER_ID=33
-ARG GROUP_ID=33
 
 USER root
 
