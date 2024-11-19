@@ -27,6 +27,9 @@
             "symfony/runtime": true
         },
         "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
         "sort-packages": true
     },
     "autoload": {

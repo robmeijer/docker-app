@@ -8,7 +8,7 @@ ENV APP_ENV=prod XDEBUG_MODE=off
 
 COPY --link --chown=www-data:www-data app/composer.* app/symfony.lock ./
 
-RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --ignore-platform-reqs --no-cache -n
+RUN composer install --ignore-platform-reqs --no-cache --no-dev --no-interaction --no-progress --no-scripts
 
 COPY --link --chown=www-data:www-data app ./
 
