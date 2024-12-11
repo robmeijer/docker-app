@@ -38,12 +38,12 @@ RUN set -eux; \
 
 USER www-data
 
-FROM nginx:${NGINX_VERSION}-alpine as web_dev
+FROM nginx:${NGINX_VERSION}-alpine AS web_dev
 
 WORKDIR /var/www/html
 
 COPY --link docker/nginx/conf.d/default.conf /etc/nginx/conf.d/
 
-FROM web_dev as web
+FROM web_dev AS web
 
 COPY --link --from=app /var/www/html/public ./public
