@@ -7,7 +7,7 @@ services:
         environment:
             APP_ENV: dev
             OPCACHE_VALIDATE_TIMESTAMPS: 1
-            XDEBUG_MODE: develop,debug
+            XDEBUG_MODE: ${XDEBUG_MODE:-off}
         extra_hosts:
             - host.docker.internal:host-gateway
         volumes:
